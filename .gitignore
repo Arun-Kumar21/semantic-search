@@ -2,7 +2,7 @@
 /server/venv/
 /server/.env
 /server/uploads/
-
+/server/**/__pycache__/
 
 # Client logs
 /client/*.log
