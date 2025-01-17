@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import io from "socket.io-client";
 import {
   Form,
   FormControl,
@@ -17,11 +18,12 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import uploadFiles from "@/actions/upload";
 
 type DataType = "mdx" | "pdf" | "text";
 type UploadMethod = "upload" | "paste";
 
-interface FormValues {
+export interface FormValues {
   dataType: DataType;
   content: string;
   file: FileList | null;
@@ -32,6 +34,21 @@ const FileUploadForm = () => {
     React.useState<UploadMethod>("upload");
   const [selectedFileName, setSelectedFileName] = React.useState<string>("");
 
+  const [socket, setSocket] = React.useState<any>();
+
+  React.useEffect(() => {
+    const socket = io(import.meta.env.VITE_SERVER_URL);
+    setSocket(socket);
+
+    socket.on("processing_status", (data: any) => {
+      console.log(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   const form = useForm<FormValues>({
     defaultValues: {
       dataType: "text",
@@ -41,7 +58,12 @@ const FileUploadForm = () => {
   });
 
   const onSubmit = (data: FormValues) => {
-    console.log("Form data:", data);
+    if (!data.file) {
+      // Text content
+      return;
+    } else {
+      uploadFiles(data);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

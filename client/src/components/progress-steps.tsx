@@ -12,25 +12,6 @@ type Status = "completed" | "current" | "upcoming";
 
 export default function ProgressSteps() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [demoProgress, setDemoProgress] = useState(true);
-
-  // Demo progress simulation
-  useEffect(() => {
-    if (!demoProgress) return;
-
-    const timer = setInterval(() => {
-      setCurrentStep((prev) => {
-        if (prev === steps.length) {
-          clearInterval(timer);
-          setDemoProgress(false);
-          return prev;
-        }
-        return prev + 1;
-      });
-    }, 2000); // Progress every 2 seconds
-
-    return () => clearInterval(timer);
-  }, [demoProgress]);
 
   const getStepStatus = (stepIdx: number): Status => {
     if (stepIdx < currentStep) return "completed";

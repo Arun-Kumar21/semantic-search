@@ -3,3 +3,8 @@ flask-cors
 transformers
 faiss-cpu
 markdown
+flask-socketio
+PyPDF2
+torch
+torchvision
+torchaudio
