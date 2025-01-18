@@ -8,7 +8,7 @@ from .routes import api
 
 def create_app(config_class = Config):
   app = Flask(__name__)
-  CORS(app, resources={r"/api/upload": {"origins": "http://localhost:5173"}})
+  CORS(app, resources={r"/api/upload": {"origins": "http://localhost:5173"}, r"/api/search": {"origins": "http://localhost:5173"}})
   app.config.from_object(config_class)
 
   socketio.init_app(app, cors_allowed_origins="*")

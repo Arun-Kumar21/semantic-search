@@ -3,20 +3,32 @@ import { Check } from "lucide-react";
 
 const steps = [
   { id: 1, name: "Upload Data", status: "current" },
-  { id: 2, name: "Processing Data", status: "upcoming" },
-  { id: 3, name: "Indexing Data", status: "upcoming" },
-  { id: 4, name: "Search Ready", status: "upcoming" },
+  { id: 2, name: "Search Ready", status: "upcoming" },
 ];
 
 type Status = "completed" | "current" | "upcoming";
 
-export default function ProgressSteps() {
-  const [currentStep, setCurrentStep] = useState(0);
+interface ProgressStepsProps {
+  progressPage: "upload" | "search";
+  setProgressPage: React.Dispatch<React.SetStateAction<"upload" | "search">>;
+}
+
+export default function ProgressSteps({
+  progressPage,
+  setProgressPage,
+}: ProgressStepsProps) {
+  const [currentStep, setCurrentStep] = useState(2);
 
   const getStepStatus = (stepIdx: number): Status => {
     if (stepIdx < currentStep) return "completed";
     if (stepIdx === currentStep) return "current";
     return "upcoming";
+  };
+
+  const handleStepClick = (stepIdx: number) => {
+    if (getStepStatus(stepIdx) === "completed") {
+      setProgressPage(stepIdx === 0 ? "upload" : "search");
+    }
   };
 
   return (
@@ -28,7 +40,16 @@ export default function ProgressSteps() {
         >
           {steps.map((step, stepIdx) => (
             <li key={step.name} className="flex items-center">
-              <div className="relative flex items-center justify-center">
+              <div
+                className="relative flex items-center justify-center cursor-pointer"
+                onClick={() => handleStepClick(stepIdx)}
+                style={{
+                  cursor:
+                    getStepStatus(stepIdx) === "completed"
+                      ? "pointer"
+                      : "default",
+                }}
+              >
                 <span className="absolute -bottom-[2rem] text-xs text-gray-500 whitespace-nowrap">
                   {step.name}
                 </span>
@@ -59,7 +80,7 @@ export default function ProgressSteps() {
                 </div>
               </div>
               {stepIdx !== steps.length - 1 && (
-                <div className="hidden sm:block relative h-0.5 w-16">
+                <div className="hidden sm:block relative h-0.5 w-44">
                   <div
                     className="absolute inset-0 bg-gray-200"
                     aria-hidden="true"

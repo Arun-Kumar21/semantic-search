@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import io from "socket.io-client";
 import {
   Form,
   FormControl,
@@ -29,25 +28,14 @@ export interface FormValues {
   file: FileList | null;
 }
 
-const FileUploadForm = () => {
+interface FileUploadFormProps {
+  socket: any;
+}
+
+const FileUploadForm: React.FC<FileUploadFormProps> = ({ socket }) => {
   const [uploadMethod, setUploadMethod] =
     React.useState<UploadMethod>("upload");
   const [selectedFileName, setSelectedFileName] = React.useState<string>("");
-
-  const [socket, setSocket] = React.useState<any>();
-
-  React.useEffect(() => {
-    const socket = io(import.meta.env.VITE_SERVER_URL);
-    setSocket(socket);
-
-    socket.on("processing_status", (data: any) => {
-      console.log(data);
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
 
   const form = useForm<FormValues>({
     defaultValues: {
