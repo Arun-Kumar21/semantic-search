@@ -5,6 +5,7 @@
 /server/**/__pycache__/
 /server/vector_embeddings.db
 
+
 # Client logs
 /client/*.log
 /client/npm-debug.log*
