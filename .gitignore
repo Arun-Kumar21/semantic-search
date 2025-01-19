@@ -3,6 +3,7 @@
 /server/.env
 /server/uploads/
 /server/**/__pycache__/
+/server/vector_embeddings.db
 
 # Client logs
 /client/*.log
