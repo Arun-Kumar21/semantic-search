@@ -15,7 +15,7 @@ class LLMResponseGenerator:
         "text-generation",
         model=self.model,
         tokenizer=self.tokenizer,
-        max_new_tokens=512,
+        max_new_tokens=256,
         temperature=0.7
       )
       
@@ -33,9 +33,8 @@ class LLMResponseGenerator:
     return context
     
   def _create_prompt(self, query : str, context : str) -> str :
-    return f"""You are a highly intelligent assistant tasked with answering questions based on the provided context.
-    Your response should be clear, concise, and directly address the query using the context.
-    If the information in the context is not sufficient to answer the query, state that explicitly.
+    return f"""
+    from given context select best point for query and return that point in clear, concise way and if context are not related to query then return "I can't response to this query".
 
     Context:
     {context}

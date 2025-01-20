@@ -10,14 +10,12 @@ const uploadFiles = async (data: FormValues) => {
     const formData = new FormData();
     formData.append("file", data.file);
 
-    console.log(data);
-
     const res = await axios.post(
       `${import.meta.env.VITE_SERVER_URL}/api/upload`,
       formData
     );
 
-    console.log(res.data);
+    return res.data;
   } catch (error: any) {
     console.error(error.response.data);
   }

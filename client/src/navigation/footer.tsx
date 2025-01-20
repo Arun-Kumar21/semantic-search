@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="text-zinc-700 text-sm absolute bottom-4 w-full p-4">
+    <footer className="text-zinc-700 text-sm bottom-4 w-full p-4">
       <p>Connect with me:</p>
       <ul className="flex items-center space-x-4 mt-2">
         {connectionLinks.map((link) => (

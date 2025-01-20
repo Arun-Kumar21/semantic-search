@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import uploadFiles from "@/actions/upload";
+import toast from "react-hot-toast";
 
 type DataType = "text";
 
@@ -27,6 +28,7 @@ export interface FormValues {
 
 const FileUploadForm = () => {
   const [selectedFileName, setSelectedFileName] = React.useState<string>("");
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const form = useForm<FormValues>({
     defaultValues: {
@@ -35,11 +37,28 @@ const FileUploadForm = () => {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     if (!data.file) {
-      return;
+      return toast.error("Please select a file");
     } else {
-      uploadFiles(data);
+      try {
+        setLoading(true);
+        const res = await uploadFiles(data);
+
+        if (res.message === "File uploaded successfully") {
+          sessionStorage.setItem("currentStage", "search");
+          toast.success("File uploaded successfully");
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+      } catch (error) {
+        toast.error("An error occurred while uploading the file");
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -130,6 +149,7 @@ const FileUploadForm = () => {
           <Button
             type="submit"
             className="w-full bg-black text-white hover:bg-gray-800"
+            disabled={loading}
           >
             Upload Data
           </Button>

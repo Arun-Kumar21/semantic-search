@@ -62,7 +62,7 @@ def upload_file():
     return jsonify({
       'message': 'File uploaded successfully',
       'file_name': filename
-    })
+    }), 200
 
   except Exception as e:
     return jsonify({'error': str(e)}), 500
@@ -72,8 +72,6 @@ def query_search():
   try:
     data = request.get_json()
     query = data.get('query', '')
-
-    print("query:", query)
 
     if not query:
       return jsonify({"error": "Search query is missing"}), 400

@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import TypingAnimation from "./typing-animation";
+import SkeletonLoader from "./skeleton-loader";
 
 interface SupportInfo {
   file_name: string;
@@ -19,6 +21,7 @@ export default function SearchResultData({
   supportInfo,
 }: SimpleDataShowcaseProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
 
   const getSimilarityColor = (score: number) => {
     if (score > 0.05) return "text-green-600";
@@ -26,53 +29,57 @@ export default function SearchResultData({
     return "text-red-600";
   };
 
+  useEffect(() => {
+    // Reset typing completion when mainResponse changes
+    setIsTypingComplete(false);
+  }, [mainResponse]);
+
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6 overflow-y-scroll max-h-[37.5vh]">
+    <div className="py-4 mt-4 space-y-6">
       <div className="space-y-2">
-        <h2 className="text-lg font-semibold mb-2">Main Response</h2>
+        <h2 className="text-lg font-semibold mb-2">LLM Response</h2>
         <div className="space-y-2">
-          <p className="text-sm text-gray-700">
-            {isOpen
-              ? mainResponse
-              : `${mainResponse.slice(0, 200)}${
-                  mainResponse.length > 200 ? "..." : ""
-                }`}
-          </p>
-          {mainResponse.length > 200 && (
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-sm text-blue-600 hover:underline focus:outline-none"
-            >
-              {isOpen ? (
-                <>
-                  Show Less <ChevronUp className="inline ml-1 h-4 w-4" />
-                </>
-              ) : (
-                <>
-                  Show More <ChevronDown className="inline ml-1 h-4 w-4" />
-                </>
-              )}
-            </button>
-          )}
+          <TypingAnimation
+            text={mainResponse}
+            onComplete={() => {
+              setTimeout(() => {
+                setIsTypingComplete(true);
+              }, 2000);
+            }}
+          />
         </div>
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold mb-2">Support Information</h2>
-        {supportInfo.map((info, index) => (
-          <div
-            key={index}
-            className="space-y-1 pb-2 border-b border-gray-200 last:border-b-0"
-          >
-            <h3 className="font-medium">{info.file_name}</h3>
-            <p
-              className={`text-sm ${getSimilarityColor(info.similarity_score)}`}
+        <h2 className="font-semibold mb-2">Support Information</h2>
+        {isTypingComplete ? (
+          supportInfo.map((info, index) => (
+            <div
+              key={index}
+              className="h-24 flex text-sm items-center justify-between p-4 bg-white rounded-sm border w-full"
             >
-              Similarity Score: {info.similarity_score.toFixed(4)}
-            </p>
-            <p className="text-sm text-gray-700">{info.text}</p>
-          </div>
-        ))}
+              <div className="flex flex-col">
+                <h3 className="truncate font-medium">{info.file_name}</h3>
+                <p className="text-sm text-gray-700 overflow-hidden line-clamp-2 overflow-ellipsis">
+                  {info.text}
+                </p>
+              </div>
+              <div
+                className={`px-2 py-1 rounded text-xs font-semibold ${
+                  info.similarity_score > 0.05
+                    ? "bg-green-100 text-green-800"
+                    : info.similarity_score > 0.03
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-red-100 text-red-800"
+                }`}
+              >
+                {(Number(info.similarity_score.toFixed(5)) * 1000).toFixed(2)}%
+              </div>
+            </div>
+          ))
+        ) : (
+          <SkeletonLoader />
+        )}
       </div>
     </div>
   );
