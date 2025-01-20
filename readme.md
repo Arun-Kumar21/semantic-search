@@ -6,9 +6,9 @@ A **Semantic Search System** built with **React**, **Flask**, and **Hugging Face
 
 ---
 
-## Project view
+## Project Video
 
-![Project view](https://drive.google.com/file/d/1DwBLwVfw2NJe5TANMpX-lxG_Ie-rK56z/view)
+![Project Video](https://drive.google.com/file/d/1DwBLwVfw2NJe5TANMpX-lxG_Ie-rK56z/view)
 
 ## Known Issues
 
