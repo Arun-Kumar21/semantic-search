@@ -8,7 +8,7 @@ A **Semantic Search System** built with **React**, **Flask**, and **Hugging Face
 
 ## Project Video
 
-![Project Video](https://drive.google.com/file/d/1DwBLwVfw2NJe5TANMpX-lxG_Ie-rK56z/view)
+https://github.com/user-attachments/assets/de61a8ed-4ced-4e52-938f-38c54e0872b0
 
 ## Known Issues
 
