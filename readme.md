@@ -2,20 +2,17 @@
 
 > **Warning**: This project is currently under development. ⚠️
 
-A reusable and scalable **Semantic Search System** built with **React**, **Flask**, and **Hugging Face Transformers**, leveraging **FAISS** for efficient indexing. This project allows you to upload and search through MDX, PDF, and text files seamlessly
+A **Semantic Search System** built with **React**, **Flask**, and **Hugging Face Transformers**, leveraging **FAISS** for efficient indexing.
 
 ---
 
-## 🌟 Features
+## Project view
 
-- **🚀 Semantic Search**: High-accuracy search powered by Hugging Face Transformers.
-- **📂 Multi-format Support**: Upload and index MDX, PDF, and plain text files.
-- **🔎 Lightning-fast Retrieval**: Optimized with FAISS for quick and scalable searches.
-- **📈 Scalable Architecture**: React frontend with Flask backend, designed for reusability.
-- **💾 Knowledge Base Builder**: Easily add your data to the system as a knowledge base.
-- **🛠️ Developer-friendly**: Modular codebase.
+![Project view](https://drive.google.com/file/d/1DwBLwVfw2NJe5TANMpX-lxG_Ie-rK56z/view)
 
----
+## Known Issues
+
+Currently, the LLM responses are not accurately generated for queries. As demonstrated in the video, the responses for the first two questions are off-topic, while only the response for "Supervised learning" is correct. Efforts are ongoing to improve the response accuracy. If you have any suggestions, please feel free to share them.
 
 ## 🛠️ Installation Steps
 
@@ -113,14 +110,6 @@ Vector-embedding-based-search/
 
 ---
 
-## 📚 Usage
-
-1. **Upload Files**: Drag and drop your MDX, PDF, or text files in the frontend.
-2. **Index Data**: The backend processes and indexes your data using FAISS.
-3. **Search**: Enter your query in the search bar and get semantically relevant results instantly.
-
----
-
 ## 🔧 Technologies Used
 
 | Technology                | Purpose                               |
@@ -131,11 +120,3 @@ Vector-embedding-based-search/
 | FAISS                     | Efficient indexing and retrieval      |
 
 ---
-
-## 📋 Use Cases
-
-**Efficient Blog Search**: Quickly find specific information or insights in MDX-based blog posts.
-
-**Personal Knowledge Base**: Organize and retrieve information from large datasets like PDFs or text files.
-
-**Interactive Documentation**: Enhance technical or project documentation with semantic search capabilities.
