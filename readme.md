@@ -1,4 +1,4 @@
-# Vector Embedding Based Search (**Semantic Search System**)✨
+# Semantic Search✨
 
 > **Warning**: This project is currently under development. ⚠️
 
